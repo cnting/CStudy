@@ -141,7 +141,7 @@ void test6() {
     printf("拼接：%s\n", cpy);
 
     //截取
-    char * sub = substr(str1, 2, 8);
+    char *sub = substr(str1, 2, 8);
     printf("截取：%s\n", sub);
     free(sub);
 
@@ -173,13 +173,38 @@ char *replace(char *source, char *from, char *to) {
 
     free(start);
     free(end);
-    return replace(result,from,to);
+    return replace(result, from, to);
 }
 
 void test7() {
     char *arr = replace("aabbccaabbcc", "aa", "cc");
     printf("%s", arr);
     free(arr);
+}
+/**
+ * 定义字符串的几种方式的区别
+ */
+void test8() {
+//    char buffer[100] = {'a', 'b', 'c'};//len:3，size:100
+//    char buffer[] = {'a', 'b', 'c'}; //len:9，size:3
+//    char buffer[100] = {0};  //都初始化为0
+//    char buffer[] = "123456";  //len:6，size:7。这种写法相当于 {'1','2','3','4','5','6','\0'}
+  char * buffer = "123456";
+
+  //char buffer[] = "123456" 和 char * buffer = "123456" 和 malloc 的区别
+  //1.char buffer[]：会从常量区一个个拷贝到栈区的数组各个为止
+  //2.char * buffer：直接指向常量区
+  //3.malloc：指向堆内存，堆内存里存"123456"
+  //所以字符串可以在任何地方开辟内存，栈区、堆区、常量区都可以
+
+
+    //strlen()碰到'\0'就结束
+    int len = strlen(buffer);
+    int size = sizeof(buffer);
+    printf("len:%d，size:%d\n", len, size);
+    //打印内容
+    printf("%d，%d，%d\n", buffer[0], buffer[66], buffer[99]);
+
 }
 
 int main() {
@@ -189,5 +214,5 @@ int main() {
 //    test4();
 //    test5();
 //    test6();
-    test7();
+    test8();
 }
